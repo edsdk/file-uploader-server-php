@@ -1,0 +1,19 @@
+{
+    "name": "edsdk/file-uploader-server-php",
+    "description": "PHP uploader for EdSDK products",
+    "type": "library",
+    "keywords": ["file", "image", "upload", "server", "imgpen"],
+    "homepage": "https://imgpen.com",
+    "license": "proprietary",
+    "minimum-stability": "stable",
+
+    "authors": [
+        {
+            "name": "EdSDK",
+            "email": "edsdk@edsdk.com"
+        }
+    ],
+    "autoload": {
+        "psr-0" : {"EdSDK" : "src"}
+    }
+}
