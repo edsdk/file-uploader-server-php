@@ -1,6 +1,6 @@
 <?php
 
-namespace EdSDK\FileUploaderServer;
+namespace EdSDK\FileUploaderServer\config;
 
 interface IConfig {
 

@@ -2,7 +2,7 @@
 
 namespace EdSDK\FileUploaderServer;
 
-require 'lib/action/req/Req.php';
+/*require 'lib/action/req/Req.php';
 
 require 'lib/action/resp/FileData.php';
 require 'lib/action/resp/Message.php';
@@ -32,11 +32,11 @@ require 'servlet/ServletConfig.php';
 require 'lib/Actions.php';
 require 'lib/JsonCodec.php';
 require 'lib/MessageException.php';
-require 'lib/Uploader.php';
+require 'lib/Uploader.php';*/
 
 use Exception;
 
-class FileUploader {
+class FileUploaderServer {
 
     static function fileUploadRequest($config) {
 
