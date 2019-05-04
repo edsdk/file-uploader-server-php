@@ -14,6 +14,8 @@
         }
     ],
     "autoload": {
-        "psr-0" : {"EdSDK" : "src"}
+        "psr-4": {
+            "EdSDK\\FileUploaderServer\\": "src"
+        }
     }
 }
