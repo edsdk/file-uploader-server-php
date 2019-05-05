@@ -60,7 +60,9 @@ class ServletConfig implements IConfig {
     }
 
     public function getBaseDir() {
-        $dir = $this->getParameter("dirFiles", __DIR__ . "/files", true);
+        $dir = $this->getParameter("dirFiles", null, true);
+        if ($dir == null)
+            throw new Exception("dirFiles not set");
         if (!file_exists($dir))
             if (!mkdir($dir, 0777, true))
                 throw new Exception("Unable to create files directory '" . $dir . "''");
