@@ -206,7 +206,7 @@ class FileCommited extends AFile {
             $fitMode = FileCommited::FIT_TO_HEIGHT;
         else if ($targetSize->height == 0)
             $fitMode = FileCommited::FIT_TO_WIDTH;
-        $image = $this->resizeImageNative($this->getImage(), $scaleW, $scaleH, $fitMode);
+        $image = FileCommited::resizeImageNative($this->getImage(), $scaleW, $scaleH, $fitMode);
 
 		if ($scaleWWithPadding > $scaleW || $scaleHWithPadding > $scaleH)
             $image = $this->addPaddingsToImageNative($image, $scaleW, $scaleH, $scaleWWithPadding, $scaleHWithPadding);
@@ -229,7 +229,7 @@ class FileCommited extends AFile {
     const FIT_EXACT = 0;
     const FIT_TO_WIDTH = 1;
     const FIT_TO_HEIGHT = 2;
-    private function resizeImageNative($image, $scaleW, $scaleH, $fitMode) {
+    public static function resizeImageNative($image, $scaleW, $scaleH, $fitMode) {
         $newW = $scaleW;
         $newH = $scaleH;
         if ($fitMode == FileCommited::FIT_TO_WIDTH) {
