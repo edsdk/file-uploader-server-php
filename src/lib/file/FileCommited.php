@@ -2,6 +2,8 @@
 
 namespace EdSDK\FileUploaderServer\file;
 
+use EdSDK\FileUploaderServer\lib\action\resp\Message;
+use EdSDK\FileUploaderServer\lib\MessageException;
 use Exception;
 
 class FileCommited extends AFile {

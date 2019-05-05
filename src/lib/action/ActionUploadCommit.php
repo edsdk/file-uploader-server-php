@@ -2,6 +2,14 @@
 
 namespace EdSDK\FileUploaderServer\lib\action;
 
+use EdSDK\FileUploaderServer\file\FileUploaded;
+use EdSDK\FileUploaderServer\file\UtilsPHP;
+use EdSDK\FileUploaderServer\lib\action\resp\Message;
+use EdSDK\FileUploaderServer\lib\action\resp\RespOk;
+use EdSDK\FileUploaderServer\lib\action\resp\RespUploadCommit;
+use EdSDK\FileUploaderServer\lib\MessageException;
+use Exception;
+
 class ActionUploadCommit extends AActionUploadId {
 
 	public function getName() {

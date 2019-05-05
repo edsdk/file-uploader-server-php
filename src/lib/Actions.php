@@ -2,6 +2,13 @@
 
 namespace EdSDK\FileUploaderServer\lib;
 
+use EdSDK\FileUploaderServer\lib\action\ActionError;
+use EdSDK\FileUploaderServer\lib\action\ActionUploadAddFile;
+use EdSDK\FileUploaderServer\lib\action\ActionUploadCancel;
+use EdSDK\FileUploaderServer\lib\action\ActionUploadCommit;
+use EdSDK\FileUploaderServer\lib\action\ActionUploadInit;
+use EdSDK\FileUploaderServer\lib\action\ActionUploadRemoveFile;
+
 class Actions {
 
     protected $m_actions = [];

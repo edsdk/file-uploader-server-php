@@ -2,6 +2,11 @@
 
 namespace EdSDK\FileUploaderServer\lib\action;
 
+use EdSDK\FileUploaderServer\file\FileUploaded;
+use EdSDK\FileUploaderServer\lib\action\resp\Message;
+use EdSDK\FileUploaderServer\lib\action\resp\RespOk;
+use EdSDK\FileUploaderServer\lib\MessageException;
+
 class ActionUploadRemoveFile extends AActionUploadId {
 
 	public function getName() {

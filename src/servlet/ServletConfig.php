@@ -2,6 +2,8 @@
 
 namespace EdSDK\FileUploaderServer\servlet;
 
+use EdSDK\FileUploaderServer\config\IConfig;
+use EdSDK\FileUploaderServer\file\UtilsPHP;
 use Exception;
 
 class ServletConfig implements IConfig {
@@ -58,7 +60,7 @@ class ServletConfig implements IConfig {
     }
 
     public function getBaseDir() {
-        $dir = $this->getParameter("dirFiles", ROOTPATH . "/files", true);
+        $dir = $this->getParameter("dirFiles", __DIR__ . "/files", true);
         if (!file_exists($dir))
             if (!mkdir($dir, 0777, true))
                 throw new Exception("Unable to create files directory '" . $dir . "''");

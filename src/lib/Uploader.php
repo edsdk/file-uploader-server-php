@@ -2,6 +2,10 @@
 
 namespace EdSDK\FileUploaderServer\lib;
 
+use EdSDK\FileUploaderServer\lib\action\req\ReqError;
+use EdSDK\FileUploaderServer\lib\action\resp\Message;
+use EdSDK\FileUploaderServer\lib\action\resp\RespFail;
+
 class Uploader {
 
     protected $m_actions;

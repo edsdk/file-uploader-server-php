@@ -2,6 +2,11 @@
 
 namespace EdSDK\FileUploaderServer\file;
 
+use EdSDK\FileUploaderServer\lib\action\resp\FileData;
+use EdSDK\FileUploaderServer\lib\action\resp\Message;
+use EdSDK\FileUploaderServer\lib\MessageException;
+use Exception;
+
 abstract class AFile {
 
     protected $m_config;

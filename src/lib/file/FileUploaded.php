@@ -2,6 +2,9 @@
 
 namespace EdSDK\FileUploaderServer\file;
 
+use EdSDK\FileUploaderServer\lib\action\resp\Message;
+use EdSDK\FileUploaderServer\lib\MessageException;
+
 class FileUploaded extends AFile {
 
     protected $m_newName;

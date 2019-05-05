@@ -2,6 +2,8 @@
 
 namespace EdSDK\FileUploaderServer\lib\action;
 
+use EdSDK\FileUploaderServer\lib\action\resp\RespFail;
+
 class ActionError extends AAction {
 
     public function getName() { return "error"; }

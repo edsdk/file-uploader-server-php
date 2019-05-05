@@ -2,6 +2,12 @@
 
 namespace EdSDK\FileUploaderServer\lib\action;
 
+use EdSDK\FileUploaderServer\file\UtilsPHP;
+use EdSDK\FileUploaderServer\lib\action\resp\Message;
+use EdSDK\FileUploaderServer\lib\action\resp\RespOk;
+use EdSDK\FileUploaderServer\lib\MessageException;
+use Exception;
+
 class ActionUploadCancel extends AActionUploadId {
 
 	public function getName() {

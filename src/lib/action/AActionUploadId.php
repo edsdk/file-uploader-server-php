@@ -2,6 +2,9 @@
 
 namespace EdSDK\FileUploaderServer\lib\action;
 
+use EdSDK\FileUploaderServer\lib\action\resp\Message;
+use EdSDK\FileUploaderServer\lib\MessageException;
+
 abstract class AActionUploadId extends AAction {
 
     protected function validateUploadId($req) {
