@@ -2,7 +2,7 @@
 
 namespace EdSDK\FileUploaderServer\servlet;
 
-use EdSDK\FileUploaderServer\config\IConfig;
+use EdSDK\FileUploaderServer\lib\config\IConfig;
 use EdSDK\FileUploaderServer\lib\file\UtilsPHP;
 use Exception;
 
