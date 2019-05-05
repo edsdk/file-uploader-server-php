@@ -2,7 +2,7 @@
 
 namespace EdSDK\FileUploaderServer\lib\action;
 
-use EdSDK\FileUploaderServer\file\FileUploaded;
+use EdSDK\FileUploaderServer\lib\file\FileUploaded;
 use EdSDK\FileUploaderServer\lib\action\resp\Message;
 use EdSDK\FileUploaderServer\lib\MessageException;
 

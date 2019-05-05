@@ -1,6 +1,6 @@
 <?php
 
-namespace EdSDK\FileUploaderServer\file;
+namespace EdSDK\FileUploaderServer\lib\file;
 
 class Utils {
 

@@ -3,7 +3,7 @@
 namespace EdSDK\FileUploaderServer\servlet;
 
 use EdSDK\FileUploaderServer\config\IConfig;
-use EdSDK\FileUploaderServer\file\UtilsPHP;
+use EdSDK\FileUploaderServer\lib\file\UtilsPHP;
 use Exception;
 
 class ServletConfig implements IConfig {

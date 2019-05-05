@@ -2,7 +2,7 @@
 
 namespace EdSDK\FileUploaderServer\lib\action;
 
-use EdSDK\FileUploaderServer\file\UtilsPHP;
+use EdSDK\FileUploaderServer\lib\file\UtilsPHP;
 use EdSDK\FileUploaderServer\lib\action\resp\Message;
 use EdSDK\FileUploaderServer\lib\action\resp\RespOk;
 use EdSDK\FileUploaderServer\lib\MessageException;
