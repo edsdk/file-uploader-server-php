@@ -84,7 +84,7 @@ class Utils {
         $exts = ["gif", "jpg", "jpeg", "png"];
         $ext = Utils::getExt($name);
         for ($i=0; $i<count($exts); $i++)
-            if ($exts[$i] === $ext)
+            if ($exts[$i] === strtolower($ext))
                 return true;
         return false;
     }
