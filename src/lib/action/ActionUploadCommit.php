@@ -51,7 +51,7 @@ class ActionUploadCommit extends AActionUploadId {
 		$req->dir = UtilsPHP::normalizeNoEndSeparator($req->dir) . "/";
 
 		$dir = $this->m_config->getBaseDir() . $req->dir;
-		if (!file_exists($dir)) {
+		if (!file_exists($dir) && !mkdir($dir)) {
             throw new MessageException(Message::createMessage(Message::DIR_DOES_NOT_EXIST, $req->dir));
         }
 

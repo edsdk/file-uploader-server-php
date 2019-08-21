@@ -33,8 +33,8 @@ To handle some URL you want in your web application, create a file which will be
     
     FileUploader::fileUploadRequest(
         array(
-            'dirFiles' => '/var/www/files',
-            'dirTmp'   => '/var/www/files/tmp'
+            'dirFiles' => 'data',
+            'dirTmp'   => 'data'
         )
     );
 ```
