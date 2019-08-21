@@ -58,7 +58,7 @@ Another backends are also available for [ImgPen](https://imgpen.com) users:
 
 ## See Also
 
-- [ImgPen website](https://imgpen.com)
+- [ImgPen website](https://n1ed.com/docs/addons/image-editor)
 - [File Uploader server and ImgPen example](https://packagist.org/packages/edsdk/imgpen-example-php)
 
 
