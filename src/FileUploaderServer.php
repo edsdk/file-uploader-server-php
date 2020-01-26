@@ -16,9 +16,6 @@ defined('_JEXEC') or die('Restricted access');
 use EdSDK\FileUploaderServer\servlet\UploaderServlet;
 use Exception;
 
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
-
 class FileUploaderServer {
 
     static function fileUploadRequest($config) {
