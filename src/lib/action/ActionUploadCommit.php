@@ -1,6 +1,16 @@
 <?php
 
+/**
+ * File Uploader Server package
+ * Developer: N1ED
+ * Website: https://n1ed.com/
+ * License: GNU General Public License Version 3 or later
+ **/
+
 namespace EdSDK\FileUploaderServer\lib\action;
+
+// No direct access to this file
+defined('_JEXEC') or die('Restricted access');
 
 use EdSDK\FileUploaderServer\lib\file\FileUploaded;
 use EdSDK\FileUploaderServer\lib\file\UtilsPHP;
@@ -20,7 +30,7 @@ class ActionUploadCommit extends AActionUploadId {
         $size->enlarge = $this->validateBoolean($size->enlarge, $sizeName === "preview");
         $size->width = $this->validateInteger($size->width, 0);
         $size->height = $this->validateInteger($size->height, 0);
-}
+    }
 
 	protected function validateSizes($req) {
         if (!array_key_exists("sizes", $req) || $req->sizes === null) {

@@ -58,11 +58,9 @@ Another backends are also available for [ImgPen](https://imgpen.com) users:
 
 ## See Also
 
-- [ImgPen website](https://n1ed.com/docs/addons/image-editor)
-- [File Uploader server and ImgPen example](https://packagist.org/packages/edsdk/imgpen-example-php)
+- [N1ED](https://n1ed.com) - Flmngr server perfectly works with #1 free HTML WYSIWYG Editor which can be installed on your website (any CMS).
 
 
 ## License
 
-Double licensing with EdSDK licenses family. Free usage is available.
-File Uploader now comes in bundle with ImgPen image editor and uses the same license you choose for [ImgPen](https://npmjs.com/package/@edsdk/imgpen).
+GNU General Public License version 3 or later; see LICENSE.txt

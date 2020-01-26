@@ -1,6 +1,16 @@
 <?php
 
+/**
+ * File Uploader Server package
+ * Developer: N1ED
+ * Website: https://n1ed.com/
+ * License: GNU General Public License Version 3 or later
+ **/
+
 namespace EdSDK\FileUploaderServer\servlet;
+
+// No direct access to this file
+defined('_JEXEC') or die('Restricted access');
 
 use EdSDK\FileUploaderServer\lib\file\UtilsPHP;
 use EdSDK\FileUploaderServer\lib\action\req\ReqError;
