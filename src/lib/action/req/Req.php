@@ -9,9 +9,6 @@
 
 namespace EdSDK\FileUploaderServer\lib\action\req;
 
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
-
 class Req {
 
     public $action;

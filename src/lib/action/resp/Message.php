@@ -9,9 +9,6 @@
 
 namespace EdSDK\FileUploaderServer\lib\action\resp;
 
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
-
 class Message {
 
     const FILE_ERROR_SYNTAX = -1; // args: name

@@ -9,9 +9,6 @@
 
 namespace EdSDK\FileUploaderServer\lib\config;
 
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
-
 interface IConfig {
 
     public function setTestConfig($testConf);

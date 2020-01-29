@@ -10,9 +10,6 @@
 
 namespace EdSDK\FileUploaderServer;
 
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
-
 use EdSDK\FileUploaderServer\servlet\UploaderServlet;
 use Exception;
 

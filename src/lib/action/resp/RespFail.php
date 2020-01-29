@@ -9,9 +9,6 @@
 
 namespace EdSDK\FileUploaderServer\lib\action\resp;
 
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
-
 class RespFail extends RespOk {
 
     public $message;

@@ -9,9 +9,6 @@
 
 namespace EdSDK\FileUploaderServer\lib\action;
 
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
-
 abstract class AAction {
 
     protected $m_config;

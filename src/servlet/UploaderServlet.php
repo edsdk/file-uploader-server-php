@@ -9,9 +9,6 @@
 
 namespace EdSDK\FileUploaderServer\servlet;
 
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
-
 use EdSDK\FileUploaderServer\lib\file\UtilsPHP;
 use EdSDK\FileUploaderServer\lib\action\req\ReqError;
 use EdSDK\FileUploaderServer\lib\action\resp\Message;

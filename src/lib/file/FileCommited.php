@@ -9,9 +9,6 @@
 
 namespace EdSDK\FileUploaderServer\lib\file;
 
-// No direct access to this file
-defined('_JEXEC') or die('Restricted access');
-
 use EdSDK\FileUploaderServer\lib\action\resp\Message;
 use EdSDK\FileUploaderServer\lib\MessageException;
 use Exception;
