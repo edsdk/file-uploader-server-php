@@ -63,7 +63,13 @@ class Utils {
         if (strlen($name) > 260)
             return false;
 
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+
+        /*
+         * TODO: fix this and uncomment
+         * On Windows + IIS + PHP produces:
+         * Warning:  preg_match(): Unknown modifier '\' in <b>...\vendor\edsdk\file-uploader-server-php\src\lib\file\Utils.php on line 83
+         *
+         * if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             // https://stackoverflow.com/questions/6730009/validate-a-file-name-on-windows
             // https://msdn.microsoft.com/en-us/library/aa365247(v=vs.85).aspx#file_and_directory_names
             $pattern =
@@ -82,7 +88,7 @@ class Utils {
                 "$/ui";
             if (!preg_match($pattern, $name))
                 return false;
-        }
+        }*/
 
         return true;
     }

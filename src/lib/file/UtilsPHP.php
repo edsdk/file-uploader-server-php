@@ -19,7 +19,9 @@ class UtilsPHP {
 
     public static function delete($dirOrFile, $deleteSelfDir = true) {
         if (is_file($dirOrFile)) {
-            if (!unlink($dirOrFile))
+
+            $result = is_dir($dirOrFile) ? rmdir($dirOrFile) : unlink($dirOrFile);
+            if (!$result)
                 throw new Exception('Unable to delete file `' . $dirOrFile . '``');
         }
         elseif (is_dir($dirOrFile)) {
