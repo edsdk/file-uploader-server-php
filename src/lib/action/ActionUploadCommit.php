@@ -51,6 +51,9 @@ class ActionUploadCommit extends AActionUploadId {
 		$req->autoRename = $this->validateBoolean($req->autoRename, false);
         $req->dir = $this->validateString($req->dir, "");
 
+        if (strpos($req->dir) !== 0)
+            $req->dir="/".$req->dir;
+
 		if (UtilsPHP::normalizeNoEndSeparator($req->dir) === null) {
             throw new MessageException(Message::createMessage(Message::DIR_DOES_NOT_EXIST, $req->dir));
         }
