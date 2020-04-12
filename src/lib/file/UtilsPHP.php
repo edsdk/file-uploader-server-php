@@ -22,7 +22,7 @@ class UtilsPHP {
 
             $result = is_dir($dirOrFile) ? rmdir($dirOrFile) : unlink($dirOrFile);
             if (!$result)
-                throw new Exception('Unable to delete file `' . $dirOrFile . '``');
+                throw new Exception('Unable to delete file: ' . $dirOrFile);
         }
         elseif (is_dir($dirOrFile)) {
             $scan = glob(rtrim($dirOrFile,'/').'/*');
@@ -31,13 +31,13 @@ class UtilsPHP {
             }
             if ($deleteSelfDir)
                 if (!rmdir($dirOrFile))
-                    throw new Exception('Unable to delete directory `' . $dirOrFile . '``');
+                    throw new Exception('Unable to delete directory: ' . $dirOrFile);
         }
     }
 
     public static function copyFile($src, $dst) {
         if (!copy($src, $dst))
-            throw new Exception('Unable to copy file `' . $src . '` to `' . $dst . '`');
+            throw new Exception('Unable to copy file ' . $src . ' to ' . $dst );
     }
 
     public static function normalizeNoEndSeparator($path) {
