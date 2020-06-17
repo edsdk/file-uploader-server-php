@@ -269,29 +269,29 @@ class FileCommited extends AFile {
         return $imageWithPaddings;
 	}
 
-	private function isTransparent($image) {
-        $w = imagesx($image)-1;
-        $w2 = floor($w/2.0);
-        $h = imagesy($image)-1;
-        $h2 = floor($w/2.0);
-        if (FileCommited::isPixelTransparent($image, 0, 0)) return true;
-        if (FileCommited::isPixelTransparent($image, $w, 0)) return true;
-        if (FileCommited::isPixelTransparent($image, 0, $h)) return true;
-        if (FileCommited::isPixelTransparent($image, $w, $h)) return true;
-        if ($w2 != $w || $h2 != $h) {
-            if (FileCommited::isPixelTransparent($image, $w2, 0)) return true;
-            if (FileCommited::isPixelTransparent($image, $w, $h2)) return true;
-            if (FileCommited::isPixelTransparent($image, $w2, $h)) return true;
-            if (FileCommited::isPixelTransparent($image, 0, $h2)) return true;
-        }
-        return false;
-    }
+	static function isTransparent($image) {
+      $w = imagesx($image)-1;
+      $w2 = floor($w/2.0);
+      $h = imagesy($image)-1;
+      $h2 = floor($w/2.0);
+      if (FileCommited::isPixelTransparent($image, 0, 0)) return true;
+      if (FileCommited::isPixelTransparent($image, $w, 0)) return true;
+      if (FileCommited::isPixelTransparent($image, 0, $h)) return true;
+      if (FileCommited::isPixelTransparent($image, $w, $h)) return true;
+      if ($w2 != $w || $h2 != $h) {
+          if (FileCommited::isPixelTransparent($image, $w2, 0)) return true;
+          if (FileCommited::isPixelTransparent($image, $w, $h2)) return true;
+          if (FileCommited::isPixelTransparent($image, $w2, $h)) return true;
+          if (FileCommited::isPixelTransparent($image, 0, $h2)) return true;
+      }
+      return false;
+  }
 
-    private function isPixelTransparent($image, $x, $y) {
-        $rgba = imagecolorat($image, $x, $y);
-        $alpha = ($rgba & 0x7F000000) >> 24;
-        return $alpha > 0;
-    }
+  static function isPixelTransparent($image, $x, $y) {
+      $rgba = imagecolorat($image, $x, $y);
+      $alpha = ($rgba & 0x7F000000) >> 24;
+      return $alpha > 0;
+  }
 
 	public function isCommited() {
 		return true;

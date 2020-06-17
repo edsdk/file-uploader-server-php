@@ -147,6 +147,13 @@ abstract class AFile {
             case 'png':  $image = @imagecreatefrompng($path);  break;
             case 'bmp':  $image = @imagecreatefromwbmp($path); break;
         }
+
+        // Somewhy it can not read ONLY SOME JPEG files, we've caught it on Windows + IIS + PHP
+        // Solution from here: https://github.com/libgd/libgd/issues/206
+        if (!$image)
+          $image= imagecreatefromstring(file_get_contents($path));
+        // end of fix
+
         if (!$image)
             throw new MessageException(Message::createMessage(Message::IMAGE_PROCESS_ERROR));
         imagesavealpha($image, TRUE);
