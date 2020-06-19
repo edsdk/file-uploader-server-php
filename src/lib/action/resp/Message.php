@@ -43,9 +43,9 @@ class Message {
     const DOWNLOAD_FAIL_HOST_DENIED = 25; // args: host name
     const DOWNLOAD_FAIL_INCORRECT_URL = 26; // args: url
 
-    protected $code;
-    protected $args;
-    protected $files;
+    public $code;
+    public $args;
+    public $files;
 
     private function __construct() {}
 
