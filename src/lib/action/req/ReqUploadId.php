@@ -9,15 +9,8 @@
 
 namespace EdSDK\FileUploaderServer\lib\action\req;
 
-class Req {
+class ReqUploadId extends Req {
 
-    public $action;
-
-    public $test_clearAllFiles;
-    public $test_serverConfig;
-
-    public $m_fileName;
-    public $m_fileSize;
-    public $m_file;
+    public $uploadId;
 
 }

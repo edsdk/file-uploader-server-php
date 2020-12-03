@@ -24,7 +24,7 @@ class ActionUploadAddFile extends AActionUploadId {
 		$this->validateUploadId($req);
 
 		$file = null;
-		if (!array_key_exists("url", $req)) {
+		if (!isset($req->url)) {
             if ($req->m_fileName === null || $req->m_file === null)
                 throw new MessageException(Message::createMessage(Message::NO_FILE_UPLOADED));
 

@@ -23,7 +23,7 @@ class JsonCodec {
         $jsonObj = json_decode($json, false);
         if ($jsonObj === null)
             throw new Exception('Unable to parse JSON');
-        if (!array_key_exists('action', $jsonObj))
+        if (!isset($jsonObj->action))
             throw new Exception('"Unable to detect action in JSON"');
         $action = $this->m_actions->getAction($jsonObj->action);
         if ($action === null)

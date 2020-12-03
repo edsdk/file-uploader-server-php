@@ -77,7 +77,7 @@ class FileCommited extends AFile {
 		$currOriginalWidth = $fileOriginalOrFull->getImageWidth();
 		$currOriginalHeight = $fileOriginalOrFull->getImageHeight();
 
-		if (array_key_exists(FileCommited::SIZE_PREVIEW, $sizes)) {
+		if (isset($sizes[FileCommited::SIZE_PREVIEW])) {
             if (!$filePreview->exists())
                 $fileOriginalOrFull->copyTo($filePreview);
             $sizeName = FileCommited::SIZE_PREVIEW;
@@ -88,7 +88,7 @@ class FileCommited extends AFile {
                         $filePreview->resizeImage($targetSize);
 		}
 
-        if (array_key_exists(FileCommited::SIZE_FULL, $sizes)) {
+        if (isset($sizes[FileCommited::SIZE_FULL])) {
 		    $sizeName = FileCommited::SIZE_FULL;
             $targetSize = $sizes->$sizeName;
             if ($targetSize->width != $currFullWidth || $targetSize->height != $currFullHeight)
