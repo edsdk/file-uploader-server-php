@@ -38,7 +38,7 @@ class ActionUploadCommit extends AActionUploadId {
       for ($i = 0; $i < count($sizesNames); $i++) {
         $sizeName = $sizesNames[$i];
         if ($req->sizes[$sizeName]) {
-          $this->validateSize($req->sizes->$sizeName, $sizeName);
+          $this->validateSize($req->sizes[$sizeName], $sizeName);
         }
       }
     }
