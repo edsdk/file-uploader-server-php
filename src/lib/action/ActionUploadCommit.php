@@ -35,6 +35,8 @@ class ActionUploadCommit extends AActionUploadId {
     }
     else {
       $sizesNames = ["full", "preview"];
+      //theoretical workaround for 7.4
+      $req->sizes = (array) $req->sizes;
       for ($i = 0; $i < count($sizesNames); $i++) {
         $sizeName = $sizesNames[$i];
         if ($req->sizes[$sizeName]) {
