@@ -10,18 +10,25 @@
 namespace EdSDK\FileUploaderServer\lib\file;
 
 use EdSDK\FileUploaderServer\lib\action\resp\Message;
+use EdSDK\FileUploaderServer\lib\action\resp\FileData;
 use EdSDK\FileUploaderServer\lib\MessageException;
 
-class FileUploaded extends AFile
+class FileUploadedQuick extends AFile
 {
     protected $m_newName;
 
     protected $m_confilictsErrors = [];
     protected $m_customErrors = [];
 
+    protected $dir;
+
+    protected $name;
+
     public function __construct($config, $dir, $name, $newName)
     {
         parent::__construct($config, $dir, $name);
+        $this->dir = $dir;
+        $this->name = $name;
         $this->m_newName = $newName;
     }
 
@@ -127,7 +134,7 @@ class FileUploaded extends AFile
     {
         $initName = $this->getName();
         $this->setFreeFileName();
-
+        // dump('sadas');
         if (!move_uploaded_file($file['tmp_name'], $this->getFullPath())) {
             throw new MessageException(
                 Message::createMessage(Message::WRITING_FILE_ERROR, $initName)
@@ -157,5 +164,42 @@ class FileUploaded extends AFile
     public function isCommited()
     {
         return false;
+    }
+
+    public function getFullPath()
+    {
+        return $this->dir . '/' . $this->name;
+    }
+
+    public function getData()
+    {
+        $data = new FileData();
+        $data->isCommited = $this->isCommited();
+        $data->name = $this->getName();
+        $data->dir = $this->getDir();
+        $data->bytes = $this->getSize();
+        $errors = $this->getErrors();
+        $data->errors = [];
+        for ($i = 0; $i < count($errors); $i++) {
+            $data->errors[] = (array) $errors[$i];
+        }
+
+        $data->isImage = $this->isImage();
+        $data->sizes = [];
+        if ($data->isImage) {
+            $data->width = $this->getImageWidth();
+            $data->height = $this->getImageHeight();
+            if ($data->isCommited) {
+                if ($this->m_mainFile === null) {
+                    $modifications = $this->getModifications();
+                    for ($i = 0; $i < count($modifications); $i++) {
+                        $data->sizes[
+                            $modifications[$i]->getModificationName()
+                        ] = $modifications[$i]->getData();
+                    }
+                }
+            }
+        }
+        return $data;
     }
 }
