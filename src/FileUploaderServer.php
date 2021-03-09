@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * File Uploader Server package
  * Developer: N1ED
@@ -12,10 +13,10 @@ namespace EdSDK\FileUploaderServer;
 use EdSDK\FileUploaderServer\servlet\UploaderServlet;
 use Exception;
 
-class FileUploaderServer
-{
-    static function fileUploadRequest($config)
-    {
+class FileUploaderServer {
+
+    static function fileUploadRequest($config) {
+
         try {
             $servlet = new UploaderServlet();
             $servlet->init($config);
@@ -24,10 +25,10 @@ class FileUploaderServer
             error_log($e);
             throw $e;
         }
+
     }
 
-    static function quickUpload($config, $fileSystem)
-    {
+    static function quickUpload($config, $fileSystem){
         try {
             $servlet = new UploaderServlet();
             $servlet->init($config);
@@ -37,4 +38,5 @@ class FileUploaderServer
             throw $e;
         }
     }
+
 }

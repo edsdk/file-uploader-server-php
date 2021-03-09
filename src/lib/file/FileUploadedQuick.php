@@ -30,6 +30,33 @@ class FileUploadedQuick extends AFile
         $this->dir = $dir;
         $this->name = $name;
         $this->m_newName = $newName;
+        $this->name = $this->checkFileNameExistence();
+    }
+
+    private function checkFileNameExistence()
+    {
+        function file_newname($path, $filename)
+        {
+            if ($pos = strrpos($filename, '.')) {
+                $name = substr($filename, 0, $pos);
+                $ext = substr($filename, $pos);
+            } else {
+                $name = $filename;
+            }
+
+            $newpath = $path . '/' . $filename;
+            $newname = $filename;
+            $counter = 0;
+            while (file_exists($newpath)) {
+                $newname = $name . '_' . $counter . $ext;
+                $newpath = $path . '/' . $newname;
+                $counter++;
+            }
+
+            return $newname;
+        }
+
+        return file_newname($this->dir, $this->name);
     }
 
     public function getBaseDir()
@@ -94,47 +121,15 @@ class FileUploadedQuick extends AFile
         return $errors;
     }
 
-    public function getCommitedFile($dir)
-    {
-        return new FileCommited($this->m_config, $dir, $this->m_newName);
-    }
-
     public function checkForConflicts($dir)
     {
         $this->m_confilictsErrors = [];
-
-        $file = $this->getCommitedFile($dir);
-        if ($file->exists()) {
-            $this->m_confilictsErrors[] = Message::createMessage(
-                Message::FILE_ALREADY_EXISTS,
-                $file->getName()
-            );
-        }
-
-        if ($file->isImage()) {
-            $fileOriginal = $file->getFileOriginal();
-            if ($fileOriginal->exists()) {
-                $this->m_confilictsErrors[] = Message::createMessage(
-                    Message::FILE_ALREADY_EXISTS,
-                    $fileOriginal->getName()
-                );
-            }
-
-            $filePreview = $file->getFilePreview();
-            if ($filePreview->exists()) {
-                $this->m_confilictsErrors[] = Message::createMessage(
-                    Message::FILE_ALREADY_EXISTS,
-                    $filePreview->getName()
-                );
-            }
-        }
     }
 
-    public function uploadAndCommit($file)
+    public function upload($file)
     {
         $initName = $this->getName();
         $this->setFreeFileName();
-        // dump('sadas');
         if (!move_uploaded_file($file['tmp_name'], $this->getFullPath())) {
             throw new MessageException(
                 Message::createMessage(Message::WRITING_FILE_ERROR, $initName)
@@ -142,28 +137,9 @@ class FileUploadedQuick extends AFile
         }
     }
 
-    public function rehost($url)
-    {
-        $dUrl = URLDownloader::download(
-            $url,
-            $this->getBaseDir() . '/' . $this->getDir()
-        );
-        $this->setName($dUrl->fileName);
-    }
-
-    public function commit($dir, $autoRename)
-    {
-        $file = $this->getCommitedFile($dir);
-        if ($autoRename) {
-            $file->setFreeFileName();
-        }
-        $this->copyTo($file);
-        return $file;
-    }
-
     public function isCommited()
     {
-        return false;
+        return true;
     }
 
     public function getFullPath()
@@ -175,7 +151,7 @@ class FileUploadedQuick extends AFile
     {
         $data = new FileData();
         $data->isCommited = $this->isCommited();
-        $data->name = $this->getName();
+        $data->name = $this->name;
         $data->dir = $this->getDir();
         $data->bytes = $this->getSize();
         $errors = $this->getErrors();
