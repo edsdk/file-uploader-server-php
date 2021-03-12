@@ -28,4 +28,15 @@ class FileUploaderServer {
 
     }
 
+    static function quickUpload($config, $fileSystem){
+        try {
+            $servlet = new UploaderServlet();
+            $servlet->init($config);
+            return $servlet->doQuickUpload($_POST, $_FILES, $fileSystem);
+        } catch (Exception $e) {
+            error_log($e);
+            throw $e;
+        }
+    }
+
 }

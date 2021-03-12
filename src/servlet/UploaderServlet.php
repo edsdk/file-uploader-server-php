@@ -16,6 +16,7 @@ use EdSDK\FileUploaderServer\lib\action\resp\RespFail;
 use EdSDK\FileUploaderServer\lib\Actions;
 use EdSDK\FileUploaderServer\lib\JsonCodec;
 use EdSDK\FileUploaderServer\lib\Uploader;
+use EdSDK\FileUploaderServer\lib\file\FileUploadedQuick;
 use Exception;
 
 class UploaderServlet {
@@ -115,6 +116,57 @@ class UploaderServlet {
             print($strResp);
         } catch (Exception $e) {
             error_log($e);
+        }
+    }
+
+    public function doQuickUpload($post, $files, $fileSystem){
+        $this->addHeaders();
+        $req = null;
+        if ($files && array_key_exists('file', $files)) {
+            $req = new \StdClass();
+            $req->m_file = $files['file'];
+            $req->m_fileName = $req->m_file['name'];
+            $req->m_fileSize = $req->m_file['size'];
+            if (
+                array_key_exists('dir', $post) &&
+                $post['dir'] &&
+                $post['dir'] != '/' &&
+                $post['dir'] != '' &&
+                $post['dir'] != '.'
+            ) {
+                $target_dir = basename($post['dir']);
+                $path =
+                    dirname($post['dir']) == '.' || dirname($post['dir']) == '/'
+                        ? ''
+                        : '/' . dirname($post['dir']);
+                $fullPath = basename($this->m_config->getBaseDir()) . $path;
+                $fileSystem->createDir($fullPath, $target_dir);
+                $uploadDir =
+                    $fileSystem->getAbsolutePath($fullPath) . '/' . $target_dir;
+            } else {
+                $target_dir = '';
+                $fullPath = basename($this->m_config->getBaseDir());
+                $uploadDir =
+                    $fileSystem->getAbsolutePath($fullPath) .
+                    '/' .
+                    $target_dir .
+                    '/';
+            }
+
+            $file = new FileUploadedQuick(
+                $this->m_config,
+                $uploadDir,
+                $req->m_fileName,
+                $req->m_fileName
+            );
+
+            $file->upload($req->m_file);
+            return $file->getData();
+        } else {
+            throw new Exception('No file attached');
+        }
+        if (!$req) {
+            echo 'No file attached';
         }
     }
 

@@ -20,6 +20,7 @@ class JsonCodec {
     }
 
     public function fromJson($json) {
+	$json = stripslashes($json);
         $jsonObj = json_decode($json, false);
         if ($jsonObj === null)
             throw new Exception('Unable to parse JSON');
