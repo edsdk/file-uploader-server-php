@@ -152,7 +152,7 @@ class FileUploadedQuick extends AFile
         $data = new FileData();
         $data->isCommited = $this->isCommited();
         $data->name = $this->name;
-        $data->dir = $this->getDir();
+        $data->dir = str_replace('//', '/', $this->getDir());
         $data->bytes = $this->getSize();
         $errors = $this->getErrors();
         $data->errors = [];
