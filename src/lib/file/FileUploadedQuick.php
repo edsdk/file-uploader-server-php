@@ -24,13 +24,17 @@ class FileUploadedQuick extends AFile
 
     protected $name;
 
-    public function __construct($config, $dir, $name, $newName)
+    protected $relativePath;
+
+    public function __construct($config, $dir, $name, $newName, $relativePath)
     {
         parent::__construct($config, $dir, $name);
+
         $this->dir = $dir;
         $this->name = $name;
         $this->m_newName = $newName;
         $this->name = $this->checkFileNameExistence();
+        $this->relativePath = $relativePath;
     }
 
     private function checkFileNameExistence()
@@ -121,9 +125,40 @@ class FileUploadedQuick extends AFile
         return $errors;
     }
 
+    public function getCommitedFile($dir)
+    {
+        return new FileCommited($this->m_config, $dir, $this->m_newName);
+    }
+
     public function checkForConflicts($dir)
     {
         $this->m_confilictsErrors = [];
+
+        $file = $this->getCommitedFile($dir);
+        if ($file->exists()) {
+            $this->m_confilictsErrors[] = Message::createMessage(
+                Message::FILE_ALREADY_EXISTS,
+                $file->getName()
+            );
+        }
+
+        if ($file->isImage()) {
+            $fileOriginal = $file->getFileOriginal();
+            if ($fileOriginal->exists()) {
+                $this->m_confilictsErrors[] = Message::createMessage(
+                    Message::FILE_ALREADY_EXISTS,
+                    $fileOriginal->getName()
+                );
+            }
+
+            $filePreview = $file->getFilePreview();
+            if ($filePreview->exists()) {
+                $this->m_confilictsErrors[] = Message::createMessage(
+                    Message::FILE_ALREADY_EXISTS,
+                    $filePreview->getName()
+                );
+            }
+        }
     }
 
     public function upload($file)
@@ -152,7 +187,7 @@ class FileUploadedQuick extends AFile
         $data = new FileData();
         $data->isCommited = $this->isCommited();
         $data->name = $this->name;
-        $data->dir = str_replace('//', '/', $this->getDir());
+        $data->dir = $this->relativePath;
         $data->bytes = $this->getSize();
         $errors = $this->getErrors();
         $data->errors = [];

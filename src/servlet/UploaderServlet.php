@@ -143,6 +143,8 @@ class UploaderServlet {
                 $fileSystem->createDir($fullPath, $target_dir);
                 $uploadDir =
                     $fileSystem->getAbsolutePath($fullPath) . '/' . $target_dir;
+                $req->m_relativePath =
+                    '/' . $this->pathNormalize($post['dir']) . '/';
             } else {
                 $target_dir = '';
                 $fullPath = basename($this->m_config->getBaseDir());
@@ -151,6 +153,7 @@ class UploaderServlet {
                     '/' .
                     $target_dir .
                     '/';
+                $req->m_relativePath = '/';
             }
 
             $file = new FileUploadedQuick(
@@ -168,6 +171,32 @@ class UploaderServlet {
         if (!$req) {
             echo 'No file attached';
         }
+    }
+
+    private function pathNormalize(string $path): string{
+        $path = str_replace('\\', '/', $path);
+        $blocks = preg_split('#/#', $path, null, PREG_SPLIT_NO_EMPTY);
+        $res = [];
+
+        while (list($k, $block) = each($blocks)) {
+            switch ($block) {
+                case '.':
+                    if ($k == 0) {
+                        $res = explode('/', $this->pathNormalize(getcwd()));
+                    }
+                    break;
+                case '..':
+                    if (!$res) {
+                        return false;
+                    }
+                    array_pop($res);
+                    break;
+                default:
+                    $res[] = $block;
+                    break;
+            }
+        }
+        return implode('/', $res);
     }
 
 }
