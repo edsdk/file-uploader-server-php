@@ -185,7 +185,6 @@ class FileUploadedQuick extends AFile
     public function getData()
     {
         $data = new FileData();
-        $data->isCommited = $this->isCommited();
         $data->name = $this->name;
         $data->dir = $this->relativePath;
         $data->bytes = $this->getSize();
@@ -200,16 +199,6 @@ class FileUploadedQuick extends AFile
         if ($data->isImage) {
             $data->width = $this->getImageWidth();
             $data->height = $this->getImageHeight();
-            if ($data->isCommited) {
-                if ($this->m_mainFile === null) {
-                    $modifications = $this->getModifications();
-                    for ($i = 0; $i < count($modifications); $i++) {
-                        $data->sizes[
-                            $modifications[$i]->getModificationName()
-                        ] = $modifications[$i]->getData();
-                    }
-                }
-            }
         }
         return $data;
     }

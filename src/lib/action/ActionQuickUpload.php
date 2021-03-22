@@ -9,9 +9,11 @@
 
 namespace EdSDK\FileUploaderServer\lib\action;
 
-use Exception;
 use EdSDK\FlmngrServer\fs\FMDiskFileSystem;
 use EdSDK\FileUploaderServer\lib\file\FileUploadedQuick;
+use EdSDK\FileUploaderServer\lib\action\resp\RespUploadAddFile;
+use EdSDK\FileUploaderServer\lib\action\resp\Message;
+use EdSDK\FileUploaderServer\lib\MessageException;
 
 class ActionQuickUpload extends AActionUploadId
 {
@@ -25,6 +27,7 @@ class ActionQuickUpload extends AActionUploadId
             'dirFiles' => $this->m_config->getBaseDir(),
             'dirCache' => '',
         ]);
+
 
         if ($req->m_file) {
             if (
@@ -64,11 +67,14 @@ class ActionQuickUpload extends AActionUploadId
                 $req->m_fileName,
                 $req->m_relativePath
             );
-
             $file->upload($req->m_file);
-            return $file->getData();
+
+            $resp = new RespUploadAddFile();
+            $resp->file = $file->getData();
+
+            return $resp;
         } else {
-            throw new Exception('No file attached');
+          throw new MessageException(Message::createMessage(Message::FILES_NOT_SET));
         }
     }
 }

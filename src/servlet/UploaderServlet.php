@@ -44,18 +44,13 @@ class UploaderServlet {
     protected function getReq($post, $files, $quick = false) {
         $req = null;
         try {
-            if ($quick) {
-                $req = new \StdClass();
-                $req->action = $post['action'];
-            } else {
-                $req = $this->m_json->fromJson($post['data']);
-                if ($this->m_config->isTestAllowed()) {
-                    if (array_key_exists('test_serverConfig', $req)) {
-                        $this->m_config->setTestConfig($req->test_serverConfig);
-                    }
-                    if (array_key_exists('test_clearAllFiles', $req)) {
-                        $this->clearAllFiles();
-                    }
+            $req = $this->m_json->fromJson($post['data']);
+            if ($this->m_config->isTestAllowed()) {
+                if (array_key_exists('test_serverConfig', $req)) {
+                    $this->m_config->setTestConfig($req->test_serverConfig);
+                }
+                if (array_key_exists('test_clearAllFiles', $req)) {
+                    $this->clearAllFiles();
                 }
             }
         } catch (Exception $e) {
@@ -90,7 +85,7 @@ class UploaderServlet {
         $this->addHeaders();
     }
 
-    public function doPost($post, $files, $quick = false) {
+    public function doPost($post, $files) {
         $this->addHeaders();
         $resp = null;
         $strResp = null;
@@ -98,7 +93,7 @@ class UploaderServlet {
             $req = null;
 
             try {
-                $req = $this->getReq($post, $files, $quick);
+                $req = $this->getReq($post, $files);
             } catch (Exception $e) {
                 error_log($e);
             }
@@ -117,16 +112,15 @@ class UploaderServlet {
             $strResp = $this->m_json->toJson($resp);
         }
 
-        if ($quick) {
-            return $strResp;
-        } else {
-            try {
-                http_response_code(200);
-                header('Content-Type: application/json; charset=UTF-8');
-                print $strResp;
-            } catch (Exception $e) {
-                error_log($e);
-            }
+        error_log(print_r($resp, TRUE));
+        error_log($strResp);
+
+        try {
+            http_response_code(200);
+            header('Content-Type: application/json; charset=UTF-8');
+            print($strResp);
+        } catch (Exception $e) {
+            error_log($e);
         }
     }
 
