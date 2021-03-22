@@ -15,7 +15,7 @@ use EdSDK\FileUploaderServer\lib\action\ActionUploadCancel;
 use EdSDK\FileUploaderServer\lib\action\ActionUploadCommit;
 use EdSDK\FileUploaderServer\lib\action\ActionUploadInit;
 use EdSDK\FileUploaderServer\lib\action\ActionUploadRemoveFile;
-
+use EdSDK\FileUploaderServer\lib\action\ActionQuickUpload;
 class Actions {
 
     protected $m_actions = [];
@@ -28,6 +28,7 @@ class Actions {
         $this->m_actions[] = new ActionUploadRemoveFile();
         $this->m_actions[] = new ActionUploadCommit();
         $this->m_actions[] = new ActionUploadCancel();
+        $this->m_actions[] = new ActionQuickUpload();
     }
 
     public function getActionError() {

@@ -41,15 +41,22 @@ class UploaderServlet {
         return $result;
     }
 
-    protected function getReq($post, $files) {
+    protected function getReq($post, $files, $quick = false) {
         $req = null;
         try {
-            $req = $this->m_json->fromJson($post['data']);
-            if ($this->m_config->isTestAllowed()) {
-                if (array_key_exists("test_serverConfig", $req))
-                    $this->m_config->setTestConfig($req->test_serverConfig);
-                if (array_key_exists("test_clearAllFiles", $req))
-                    $this->clearAllFiles();
+            if ($quick) {
+                $req = new \StdClass();
+                $req->action = $post['action'];
+            } else {
+                $req = $this->m_json->fromJson($post['data']);
+                if ($this->m_config->isTestAllowed()) {
+                    if (array_key_exists('test_serverConfig', $req)) {
+                        $this->m_config->setTestConfig($req->test_serverConfig);
+                    }
+                    if (array_key_exists('test_clearAllFiles', $req)) {
+                        $this->clearAllFiles();
+                    }
+                }
             }
         } catch (Exception $e) {
             error_log($e);
@@ -83,7 +90,7 @@ class UploaderServlet {
         $this->addHeaders();
     }
 
-    public function doPost($post, $files) {
+    public function doPost($post, $files, $quick = false) {
         $this->addHeaders();
         $resp = null;
         $strResp = null;
@@ -91,7 +98,7 @@ class UploaderServlet {
             $req = null;
 
             try {
-                $req = $this->getReq($post, $files);
+                $req = $this->getReq($post, $files, $quick);
             } catch (Exception $e) {
                 error_log($e);
             }
@@ -110,93 +117,19 @@ class UploaderServlet {
             $strResp = $this->m_json->toJson($resp);
         }
 
-        try {
-            http_response_code(200);
-            header('Content-Type: application/json; charset=UTF-8');
-            print($strResp);
-        } catch (Exception $e) {
-            error_log($e);
-        }
-    }
-
-    public function doQuickUpload($post, $files, $fileSystem){
-        $this->addHeaders();
-        $req = null;
-        if ($files && array_key_exists('file', $files)) {
-            $req = new \StdClass();
-            $req->m_file = $files['file'];
-            $req->m_fileName = $req->m_file['name'];
-            $req->m_fileSize = $req->m_file['size'];
-            if (
-                array_key_exists('dir', $post) &&
-                $post['dir'] &&
-                $post['dir'] != '/' &&
-                $post['dir'] != '' &&
-                $post['dir'] != '.'
-            ) {
-                $target_dir = basename($post['dir']);
-                $path =
-                    dirname($post['dir']) == '.' || dirname($post['dir']) == '/'
-                        ? ''
-                        : '/' . dirname($post['dir']);
-                $fullPath = basename($this->m_config->getBaseDir()) . $path;
-                $fileSystem->createDir($fullPath, $target_dir);
-                $uploadDir =
-                    $fileSystem->getAbsolutePath($fullPath) . '/' . $target_dir;
-                $req->m_relativePath =
-                    '/' . $this->pathNormalize($post['dir']) . '/';
-            } else {
-                $target_dir = '';
-                $fullPath = basename($this->m_config->getBaseDir());
-                $uploadDir =
-                    $fileSystem->getAbsolutePath($fullPath) .
-                    '/' .
-                    $target_dir .
-                    '/';
-                $req->m_relativePath = '/';
-            }
-
-            $file = new FileUploadedQuick(
-                $this->m_config,
-                $uploadDir,
-                $req->m_fileName,
-                $req->m_fileName
-            );
-
-            $file->upload($req->m_file);
-            return $file->getData();
+        if ($quick) {
+            return $strResp;
         } else {
-            throw new Exception('No file attached');
-        }
-        if (!$req) {
-            echo 'No file attached';
-        }
-    }
-
-    private function pathNormalize(string $path): string{
-        $path = str_replace('\\', '/', $path);
-        $blocks = preg_split('#/#', $path, null, PREG_SPLIT_NO_EMPTY);
-        $res = [];
-
-        while (list($k, $block) = each($blocks)) {
-            switch ($block) {
-                case '.':
-                    if ($k == 0) {
-                        $res = explode('/', $this->pathNormalize(getcwd()));
-                    }
-                    break;
-                case '..':
-                    if (!$res) {
-                        return false;
-                    }
-                    array_pop($res);
-                    break;
-                default:
-                    $res[] = $block;
-                    break;
+            try {
+                http_response_code(200);
+                header('Content-Type: application/json; charset=UTF-8');
+                print $strResp;
+            } catch (Exception $e) {
+                error_log($e);
             }
         }
-        return implode('/', $res);
     }
+
+   
 
 }
