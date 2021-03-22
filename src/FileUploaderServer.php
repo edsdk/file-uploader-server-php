@@ -15,28 +15,18 @@ use Exception;
 
 class FileUploaderServer {
 
-    static function fileUploadRequest($config) {
+    static function fileUploadRequest($config, $quick = false) {
 
         try {
             $servlet = new UploaderServlet();
             $servlet->init($config);
-            $servlet->doPost($_POST, $_FILES);
-        } catch (Exception $e) {
-            error_log($e);
-            throw $e;
-        }
-
-    }
-
-    static function quickUpload($config, $fileSystem){
-        try {
-            $servlet = new UploaderServlet();
-            $servlet->init($config);
-            return $servlet->doQuickUpload($_POST, $_FILES, $fileSystem);
+            $resp = $servlet->doPost($_POST, $_FILES, $quick);
+            if ($quick) {
+                return $resp;
+            }
         } catch (Exception $e) {
             error_log($e);
             throw $e;
         }
     }
-
 }
