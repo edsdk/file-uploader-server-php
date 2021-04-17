@@ -58,8 +58,8 @@ class UploaderServlet {
             return null;
         }
 
-        if (array_key_exists('file', $files)) {
-            $req->m_file = $files['file'];//$this->getFileInfo($files['file']);
+        if (array_key_exists('file', $files) || array_key_exists('upload', $files)) {
+            $req->m_file = $files['file'] || $files['upload'];
             $req->m_fileName = $req->m_file['name'];
             $req->m_fileSize = $req->m_file['size'];
         }
