@@ -58,10 +58,14 @@ class UploaderServlet {
             return null;
         }
 
-        if (array_key_exists('file', $files) || array_key_exists('upload', $files)) {
-            $req->m_file = $files['file'] || $files['upload'];
+        if (array_key_exists('file', $files)) {
+            $req->m_file = $files['file'];
             $req->m_fileName = $req->m_file['name'];
             $req->m_fileSize = $req->m_file['size'];
+        } else if (array_key_exists('upload', $files)) {
+          $req->m_file = $files['upload'];
+          $req->m_fileName = $req->m_file['name'];
+          $req->m_fileSize = $req->m_file['size'];
         }
 
         return $req;
@@ -111,9 +115,6 @@ class UploaderServlet {
             $resp = new RespFail(Message::createMessage(Message::INTERNAL_ERROR));
             $strResp = $this->m_json->toJson($resp);
         }
-
-        error_log(print_r($resp, TRUE));
-        error_log($strResp);
 
         try {
             http_response_code(200);
