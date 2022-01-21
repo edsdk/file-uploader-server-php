@@ -2,6 +2,11 @@
 
 > Module for PHP for handling file uploads
 
+
+**This package is deprecated.**
+
+**It was merged with [edsdk/flmngr-server-php](https://packagist.org/packages/edsdk/flmngr-server-php) - use it instead**
+
 Use uploader in your PHP website or application to let ImgPen or other compatible frontend components to store files on the server.
 
 Choose the URL for handling uploads and configure ImgPen to use it, that's all.
